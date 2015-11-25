@@ -1,17 +1,18 @@
 package edu.xjtu.parallel.GUI;
 
-import javax.swing.JScrollPane;
-import java.awt.Image;
-import java.awt.Dimension;
+import javax.swing.*;
+import java.awt.*;
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by Yh on 2015/11/15.
  */
 public class LoadImg {
     private List<File> files;
-    private Image image;
     private ImgPanel imgPanel;
     private JScrollPane scrollPane;
 
@@ -47,7 +48,7 @@ public class LoadImg {
         showPicTimer.schedule(new TimerTask() {
             @Override
             public void run() {
-                System.out.println("num: " + num + "size: " + files.size());
+                //System.out.println("num: " + num + "size: " + files.size());
                 if(num > files.size() - 1) {
                     cancel();
                 }else {

@@ -1,7 +1,7 @@
 package edu.xjtu.parallel.GUI;
 
-import edu.xjtu.parallel.Utils.ImageUtil;
 import edu.xjtu.parallel.DTO.ShapeDTO;
+import edu.xjtu.parallel.Utils.ImageUtil;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -21,12 +21,21 @@ public class ImgPanel extends JPanel {
     }
 
     public void setImgByFile(File file) {
-        widthAndHeight = ImageUtil.getImgWidthAndHeight(file);
+//        BufferedImage bufImage;
         try {
             image = ImageIO.read(file);
         } catch (IOException e) {
             e.printStackTrace();
         }
+//        try {
+//            bufImage = ImageIO.read(file);
+//            image = ImageUtil.patchImage(bufImage, bufImage.getWidth() + 100, bufImage.getHeight() + 100);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+        this.setWidth(image.getWidth(this));
+        this.setHeight(image.getHeight(this));
+
         repaint();
     }
 

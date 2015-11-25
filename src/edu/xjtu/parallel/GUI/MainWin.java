@@ -103,8 +103,8 @@ public class MainWin{
                         }
                     }
                     loadImg.setFiles(imgFiles, imgPanel, scrollPane);
-//                        loadImg.showPic();
-                    loadImg.showPicSerial(1000);
+                    loadImg.showPic();
+//                    loadImg.showPicSerial(1000);
                 }
                 //处理img
 
