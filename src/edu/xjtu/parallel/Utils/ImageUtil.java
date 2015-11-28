@@ -5,6 +5,7 @@ import edu.xjtu.parallel.DTO.ShapeDTO;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
 import java.io.File;
 
 /**
@@ -45,6 +46,7 @@ public class ImageUtil {
         return files[files.length - 1].toLowerCase();
     }
 
+    //拼接图片
     public static BufferedImage patchImage(BufferedImage srcImg, int width, int height, Color color) throws Exception {
         int imgType = srcImg.getType();
         int srcWidth = srcImg.getWidth();
@@ -83,5 +85,54 @@ public class ImageUtil {
 
 //        if()
         return desImg;
+    }
+
+    public static float[][] getImgRGB(BufferedImage img) throws Exception {
+        if(img == null ||
+                img.getWidth() == 0 || img.getHeight() == 0) {
+            throw new Exception("img is empty");
+        }
+        int width = img.getWidth();
+        int height = img.getHeight();
+        float[][] rgbArray = new float[3][];
+        for(int i = 0; i < 3; i++) {
+            rgbArray[i] = new float[width * height];
+        }
+        ColorModel cm = ColorModel.getRGBdefault();
+        for(int i = 0; i < width; i++) {
+            for(int j = 0; j < height; j++) {
+                int rgb = img.getRGB(i, j);
+                rgbArray[0][i * height + j] = cm.getRed(rgb);
+                rgbArray[1][i * height + j] = cm.getGreen(rgb);
+                rgbArray[2][i * height + j] = cm.getBlue(rgb);
+            }
+        }
+
+        return rgbArray;
+    }
+
+    public static BufferedImage setImgByRGB(int[] r, int[] g, int[] b, int width, int height, int type) {
+        BufferedImage img = new BufferedImage(width, height, type);
+        for(int i = 0; i < width; i++) {
+            for(int j = 0; j < height; j++) {
+                int rgb = 255 << 24 | r[i * height + j] << 16 | g[i * height + j] << 8 | b[i * height + j];
+                img.setRGB(i, j, rgb);
+            }
+        }
+
+        return img;
+    }
+
+    public static BufferedImage setImgByRGB(float[] fr, float[] fg, float[] fb, int width, int height, int type) {
+        BufferedImage img = new BufferedImage(width, height, type);
+        for(int i = 0; i < width; i++) {
+            for(int j = 0; j < height; j++) {
+                int rgb = 255 << 24 | (int)fr[i * height + j] << 16
+                        | (int)fg[i * height + j] << 8 | (int)fb[i * height + j];
+                img.setRGB(i, j, rgb);
+            }
+        }
+
+        return img;
     }
 }
